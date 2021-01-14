@@ -1,0 +1,47 @@
+_hbox;
+_expand;
+    _label ('<b>Destination :</b>');
+    red2_button := _buttonbox (@proc_red2,@macro_self);
+            red2_label := _label (' <span underline="double">R</span>ed ');
+            macro_self.putprocedure ('set.ref.red','','','',@setrefred);
+            macro_self.putprocedure ('unset.ref.red','','','',@unsetrefred);
+            macro_self.putprocedure ('toogle.ref.red','','','',@tooglerefred);
+    _endbox;
+    green2_button := _buttonbox (@proc_green2,@macro_self);
+            green2_label := _label (' <span underline="double">G</span>reen ');
+            macro_self.putprocedure ('set.ref.green','','','',@setrefgreen);
+            macro_self.putprocedure ('unset.ref.green','','','',@unsetrefgreen);
+            macro_self.putprocedure ('toogle.ref.green','','','',@tooglerefgreen);
+    _endbox;
+    blue2_button :=_buttonbox (@proc_blue2,@macro_self);
+            blue2_label := _label (' <span underline="double">B</span>lue ');
+            macro_self.putprocedure ('set.ref.blue','','','',@setrefblue);
+            macro_self.putprocedure ('unset.ref.blue','','','',@unsetrefblue);
+            macro_self.putprocedure ('toogle.ref.blue','','','',@tooglerefblue);
+    _endbox;
+    yellow2_button := _buttonbox (@proc_yellow2,@macro_self);
+            yellow2_label := _label (' <span underline="double">Y</span>ellow ');
+            macro_self.putprocedure ('set.ref.yellow','','','',@setrefyellow);
+            macro_self.putprocedure ('unset.ref.yellow','','','',@unsetrefyellow);
+            macro_self.putprocedure ('toogle.ref.yellow','','','',@tooglerefyellow);
+    _endbox;
+    cyan2_button := _buttonbox (@proc_cyan2,@macro_self);
+            cyan2_label := _label (' <span underline="double">C</span>yan ');
+            macro_self.putprocedure ('set.ref.cyan','','','',@setrefcyan);
+            macro_self.putprocedure ('unset.ref.cyan','','','',@unsetrefcyan);
+            macro_self.putprocedure ('toogle.ref.cyan','','','',@tooglerefcyan);
+    _endbox;
+    purple2_button := _buttonbox (@proc_purple2,@macro_self);
+            purple2_label := _label (' Purpl<span underline="double">e</span> ');
+            macro_self.putprocedure ('set.ref.purple','','','',@setrefpurple);
+            macro_self.putprocedure ('unset.ref.purple','','','',@unsetrefpurple);
+            macro_self.putprocedure ('toogle.ref.purple','','','',@tooglerefpurple);
+    _endbox;
+_endbox;
+
+macro_self.putprocedure ('set.ref.all','','','',@setrefall);
+macro_self.putprocedure ('unset.ref.all','','','',@unsetrefall);
+macro_self.putprocedure ('set.ref.next','','','',@setrefnext);
+macro_self.putprocedure ('unset.ref.next','','','',@unsetrefnext);
+
+

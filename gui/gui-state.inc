@@ -1,0 +1,274 @@
+{ ********************************** Status ********************************** }
+
+_page ('Info ');
+_eventbox;
+_backcolor ($FFFF,$FFFF,$BFFF);
+      _vbox;
+      _expand;
+            _label ('<b>Point-, vector-, curve-, surface-clouds transformation tool.</b>');
+
+            _separator;
+
+            _label;
+
+            _label ('<b>Version '+liball.getstring(getnat (copy({$I %date%},1,4))-2005)+'.'+liball.getstring(getnat (copy({$I %date%},6,2)))+'.'+liball.getstring(getnat (copy({$I %date%},9,2)))+'</b> for '+{$I %fpctargetos%}+' ('+{$I %fpctargetcpu}+')');
+{$ifndef free}
+            _label ('<i>Written by Heiko Stark - Copyright (c) '+liball.getstring(2005)+'-'+liball.getstring(getnat (copy({$I %date%},1,4)))+'</i>');
+{$else}
+            _label ('<i>Written by Heiko Stark - Copyright (c) '+liball.getstring(2005)+'-'+liball.getstring(getnat (copy({$I %date%},1,4)))+' (community version)</i>');
+{$endif}
+            _vbox;
+                  _hbox;
+                  _hbox;
+                  _shrink;
+                        _label ('Many thank to the');
+                        _hyperlabel ('http://lazarus-ide.org','Lazarus Team,');
+                        _hyperlabel ('https://freepascal.org','Free Pascal Team,');
+                  _endbox;
+                  _endbox;
+                  _hbox;
+                  _hbox;
+                  _shrink;
+                        _hyperlabel ('http://www.famfamfam.com/lab/icons/silk/','Silk icon set');
+                        _label ('and');
+                        _hyperlabel ('https://www.gtk.org/','GTK+ project');
+                        _label ('!');
+                  _endbox;
+                  _endbox;
+                 _label ('Please cite as: Cloud2 software (Heiko Stark, Jena, Germany;');
+                 _hbox;
+                 _hbox;
+                 _shrink;
+                         _label ('URL: ');
+                         _hyperlabel ('https://starkrats.de','https://starkrats.de');
+                         _label (').');
+                 _endbox;
+                 _endbox;
+            _endbox;
+
+            _label;
+
+            _separator;
+
+            _hbox;
+            _fill;
+                  _vbox;
+                        _label('<b>red axis   </b> = x-axis');
+                        _label('<b>green axis </b> = y-axis');
+                        _label('<b>blue axis  </b> = z-axis');
+                        _label('<b>black axis </b> = t-axis');
+                  _endbox;
+                  _vbox;
+                        _label('<b>o</b> = origin');
+                        _label('<b>x</b> = pivot');
+                        _label('<b>pivot of all</b> = black');
+                  _endbox;
+            _endbox;
+      _endbox;
+_endbox;
+_endpage;
+
+_page ('Red ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                  _text (redtext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Green ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (greentext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Blue ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (bluetext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Yellow ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (yellowtext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Cyan ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (cyantext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Purple ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (purpletext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('All ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (alltext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Mem ');
+      _vbox;
+      _fill;
+            _scrollbox;
+                   _text (memtext);
+            _endbox;
+      _endbox;
+_endpage;
+
+_page ('Pref ');
+_vbox;
+_expand;
+      _hbox;
+            command ('Refresh','','','','Refresh screen',@proc_refresh);
+      _endbox;
+      _separator;
+      _hbox;
+            _vbox;
+                  toggle_points :=  _tooltip(_checkbutton ('Show points'),'Single point');
+                  toggle_points_all := _tooltip(_uncheckbutton ('All points'),'Show all points (also for lines, ...)');
+            _endbox;
+            _vbox;
+                  toggle_vectors := _tooltip(_checkbutton ('Show vectors'),'Two points');
+                  toggle_vectors_arrows := _tooltip(_checkbutton ('V.. arrows'),'Show vector arrows');
+            _endbox;
+            _vbox;
+                  toggle_lines :=   _tooltip(_checkbutton ('Show lines'),'More than two points');
+                  toggle_lines_arrows := _tooltip(_uncheckbutton ('L.. arrows'),'Show line & loop segment arrows');
+            _endbox;
+            _vbox;
+                  toggle_loops :=   _tooltip(_checkbutton ('Show loops'),'Closed line');
+                  toggle_loops_separation := _tooltip(_checkbutton ('L.. separator'),'Show loop begin/end separator');
+            _endbox;
+      _endbox;
+      _hbox;
+            _label;
+            _label ('Max failback points:');
+            tomuch_points := _tooltip (_edit ('100000'),'Maximal points for vectors, lines and geometries');
+            _label;
+      _endbox;
+      _separator;
+      _hbox;
+            {border yes/no + color - for circle ...}
+            _label ('Point style:');
+            list_point_style := _tooltip(_combobox,'Show t-axis as radius of ...');
+                                    _item ('None');
+                                    _item ('Circle');
+                                    _item ('Fullcircle');
+                                    _item ('Sphere');
+                                    _item ('Square');
+                                    _item ('Fullsquare');
+                                    _item ('Cube');
+                             _endcombobox (0);
+            toggle_realsize := _uncheckbutton ('Real size');
+            _label ('Light:');
+            toggle_point_style_light := _tooltip(_edit ('<-100, -100, 100>'),'Light direction (only for sphere)');
+       _endbox;
+       _hbox;
+            _label ('Colors:');
+            list_color := _tooltip(_combobox,'Colors specifications of parts, t or hidden-values (t) or materials (mat) for points (p) and segments (s)');
+                                {0} _item ('Default');
+
+                                {1} _item ('p,s:Depth -≻ cmap');
+                                {2} _item ('p,s:-t0t -≻ cmap');
+                                {3} _item ('p,s:|t| -≻ cmap');
+
+                                {4} _item ('p,s:XYZ -≻ rgb');
+                                {5} _item ('p,s:|xyz| -≻ rgb');
+                                {6} _item ('s:Vector -≻ rgb');
+                                {7} _item ('s:|vector| -≻ rgb');
+
+                                {8} _item ('p:Hex(t) -≻ rgb');
+                                {9} _item ('p:Hex(mat) -≻ rgb');
+                                {10} _item ('p:Atoms(mat)');
+                          _endcombobox (0);
+            map_color := _tooltip(_combobox,'Colors maps');
+                                {0} _item ('Default ('+getstring(_tcm.default_length)+')');
+                                {1} _item ('Special ('+getstring(_tcm.special_length)+')');
+                                {2} _item ('Volume1 ('+getstring(_tcm.volume1_length)+')');
+                                {3} _item ('Volume2 ('+getstring(_tcm.volume2_length)+')');
+                                {4} _item ('Chart1 ('+getstring(_tcm.chart1_length)+')');
+                                {5} _item ('Chart2 ('+getstring(_tcm.chart2_length)+')');
+                                {6} _item ('Warn ('+getstring(_tcm.warn_length)+')');
+                                {7} _item ('Art ('+getstring(_tcm.art_length)+')');
+                                {8} _item ('Topo ('+getstring(_tcm.topo_length)+')');
+                          _endcombobox (0);
+            state_color := _edit ('3');
+            toggle_border := _uncheckbutton ('Border:'); borderlight := _tooltip(_color ($0000, $0000, $0000),'Border color');
+      _endbox;
+      _separator;
+      _hbox;
+            _label ('Background:'); backlight := _color ($FFFF, $FFFF, $FFFF);
+            _label ('Axes:');
+            list_axes := _tooltip(_combobox,'Show global axes');
+                                {0} _item ('None');
+                                {1} _item ('Global');
+                                {2} {_item ('Local'); { fixed on ruler / grid }}
+                          _endcombobox (1);
+            _label ('Scale:');
+            list_scale := _tooltip(_combobox,'Show a ruler or grid');
+                                {0} _item ('None');
+                                {1} _item ('Ruler');
+                                {2} _item ('Grid');
+                          _endcombobox (1);
+      _endbox;
+      _hbox;
+            toggle_colorreduction := _uncheckbutton ('Color reduction (8bit -≻ 3bit)');
+            _label ('Shadows:');
+            list_shadow := _tooltip(_combobox,'Shadows for drawn objects');
+                                {0} _item ('None');
+                                {1} _item ('Half');
+                                {2} _item ('Quarter');
+                                {3} _item ('Full');
+                             _endcombobox (1);
+            list_contrast := _tooltip(_combobox,'Special shadows for drawn objects');
+                                {0} _item ('None');
+                                {1} _item ('Contrast');
+                                {2} _item ('Cartoon');
+                                {3} _item ('Con+Car');
+                             _endcombobox (1);
+      _endbox;
+      _hbox;
+            _hbox;
+                  _shrink;
+                  _label ('Size:');
+                  t_snapshot_xsize := _tooltip(_smalledit ('1000'),'Image width for snapshot');
+                  _label (' x ');
+                  t_snapshot_ysize := _tooltip(_smalledit ('1000'),'Image heigth for snapshot');
+            _endbox;
+            _shrink;
+            _label ('<b>Snapshot:</b>');
+            _expand;
+            command (' XY ','','','','Snapshot of the xy screen',@proc_image_xy_b); macro_self.putprocedure ('screenshot.xy',@proc_image_xy_1); macro_self.putprocedure ('screenshot.yx',@proc_image_xy_1);
+            command (' XZ ','','','','Snapshot of the xz screen',@proc_image_xz_b); macro_self.putprocedure ('screenshot.xz',@proc_image_xz_1); macro_self.putprocedure ('screenshot.zx',@proc_image_xz_1);
+            command (' XT ','','','','Snapshot of the xt screen',@proc_image_xt_b); macro_self.putprocedure ('screenshot.xt',@proc_image_xt_1); macro_self.putprocedure ('screenshot.tx',@proc_image_xt_1);
+            command (' YZ ','','','','Snapshot of the yz screen',@proc_image_yz_b); macro_self.putprocedure ('screenshot.yz',@proc_image_yz_1); macro_self.putprocedure ('screenshot.zy',@proc_image_yz_1);
+            command (' ZT ','','','','Snapshot of the zt screen',@proc_image_zt_b); macro_self.putprocedure ('screenshot.zt',@proc_image_zt_1); macro_self.putprocedure ('screenshot.tz',@proc_image_zt_1);
+
+      _endbox;
+_endbox;
+_endpage;
